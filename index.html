@@ -35,8 +35,8 @@
     .site-header { position: sticky; z-index: 1000; top: 0; height: 68px; border-bottom: 1px solid rgba(22,45,43,.12); background: rgba(245,244,237,.94); backdrop-filter: blur(14px); }
     .nav { display: flex; align-items: center; justify-content: space-between; height: 100%; }
     .wordmark { display: inline-flex; align-items: center; gap: 10px; font: 800 14px var(--display); }
-    .brand-mark { display: grid; width: 29px; aspect-ratio: 1; place-items: center; border-radius: 50%; color: var(--lime); background: var(--ink); }
-    .brand-mark img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center 26%; }
+    .brand-mark { display: grid; width: 29px; height: 29px; flex: 0 0 29px; overflow: hidden; place-items: center; border-radius: 50%; }
+    .brand-mark img { display: block; width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center; }
     .nav-links { display: flex; align-items: center; gap: 31px; color: var(--ink-soft); font-size: 12px; font-weight: 600; }
     .nav-links a:hover { color: #a64e37; }
     .nav-links .nav-contact { padding: 9px 14px; border: 1px solid var(--ink); border-radius: 3px; color: var(--ink); }
@@ -89,6 +89,18 @@
     .case-link:hover { color: var(--ink); background: var(--lime); border-color: var(--lime); }
     .case-link svg { width: 14px; height: 14px; }
 
+    .services { color: var(--white); background: var(--ink); }
+    .services .eyebrow { color: var(--lime); }
+    .services .section-heading p { color: #bdc9c4; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(255,255,255,.2); border-left: 1px solid rgba(255,255,255,.2); }
+    .service-card { min-height: 178px; padding: 21px 22px; border-right: 1px solid rgba(255,255,255,.2); border-bottom: 1px solid rgba(255,255,255,.2); }
+    .service-number { display: block; color: var(--lime); font: 10px var(--mono); }
+    .service-card h3 { margin: 15px 0 0; font: 700 16px/1.4 var(--display); }
+    .service-card p { margin: 8px 0 0; color: #bdc9c4; font-size: 12px; line-height: 1.7; }
+    .services-action { display: inline-flex; min-height: 44px; align-items: center; gap: 9px; margin-top: 25px; padding: 0 15px; border: 1px solid var(--lime); border-radius: 3px; color: var(--ink); background: var(--lime); font-size: 12px; font-weight: 700; }
+    .services-action:hover { color: var(--lime); background: transparent; }
+    .services-action svg { width: 14px; height: 14px; }
+
     .profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     .about-intro { max-width: 860px; margin: -12px 0 28px; color: var(--ink-soft); font-size: 16px; line-height: 1.8; }
     .profile-card { padding: 23px 24px; border: 1px solid var(--line); background: var(--white); }
@@ -123,9 +135,10 @@
       .site-header { height: 60px; }
       .nav { gap: 8px; }
       .wordmark { min-width: 0; gap: 7px; font-size: 11px; }
-      .brand-mark { flex: 0 0 25px; width: 25px; }
+      .brand-mark { width: 25px; height: 25px; flex-basis: 25px; }
       .nav-links { flex: 0 0 auto; gap: 16px; }
-      .nav-links a:not(.nav-contact) { display: none; }
+      .nav-links a:not(.nav-contact):not([href="#services"]) { display: none; }
+      .nav-links a[href="#services"] { font-size: 10px; white-space: nowrap; }
       .nav-links .nav-contact { padding: 7px 8px; font-size: 10px; white-space: nowrap; }
       .nav-links .nav-contact span { display: none; }
       .hero { display: flex; flex-direction: column; }
@@ -150,12 +163,20 @@
       .work-card-content { align-items: flex-start; flex-direction: column; gap: 18px; padding: 22px; }
       .about-grid { grid-template-columns: 1fr; gap: 21px; }
       .profile-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .service-card { min-height: 170px; padding: 17px 15px; }
       .skills-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .skills-list > span { min-width: 0; min-height: 72px; align-items: stretch; flex-direction: column; gap: 5px; padding: 7px; line-height: 1.45; }
       .contact { padding: 56px 0; }
       .contact-inner { align-items: flex-start; flex-direction: column; gap: 23px; }
       .contact h2 { font-size: 36px; }
       .footer-inner { align-items: center; flex-direction: row; gap: 9px; }
+    }
+    @media (max-width: 380px) {
+      .nav-links { gap: 9px; }
+      .wordmark { font-size: 10px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { min-height: auto; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
@@ -166,11 +187,12 @@
   <header class="site-header">
     <nav class="nav wrap" aria-label="Main navigation">
       <a class="wordmark" href="#home" aria-label="Favour Olamilekan Adeoye home">
-        <span class="brand-mark" aria-hidden="true"><img src="images/Profilepic.png" alt=""></span>
+        <span class="brand-mark" aria-hidden="true"><img src="images/Profilepic-icon.jpg" alt=""></span>
         FAVOUR OLAMILEKAN ADEOYE
       </a>
       <div class="nav-links">
         <a href="#work">Projects</a>
+        <a href="#services">Services</a>
         <a href="#about">About</a>
         <a class="nav-contact" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
       </div>
@@ -275,13 +297,37 @@
       </div>
     </section>
 
+    <section class="section services" id="services" aria-labelledby="services-title">
+      <div class="wrap">
+        <div class="section-heading">
+          <div><p class="eyebrow">Services</p><h2 id="services-title">Geospatial expertise, from analysis to delivery</h2></div>
+          <p>Practical GIS support for public health, government, environmental, planning and business projects.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card"><span class="service-number">01 / ANALYZE</span><h3>Spatial analysis</h3><p>Suitability modelling, proximity, overlay, accessibility and spatial decision support.</p></article>
+          <article class="service-card"><span class="service-number">02 / HEALTH</span><h3>Health GIS</h3><p>Healthcare access, facility coverage, catchment analysis and service equity mapping.</p></article>
+          <article class="service-card"><span class="service-number">03 / WEB</span><h3>Web GIS development</h3><p>Interactive web maps, spatial dashboards, searchable map applications and GIS frontends.</p></article>
+          <article class="service-card"><span class="service-number">04 / IMAGERY</span><h3>Remote sensing &amp; image processing</h3><p>Satellite-image processing, land-cover mapping and change detection workflows.</p></article>
+          <article class="service-card"><span class="service-number">05 / DATA</span><h3>GIS database design</h3><p>Geospatial data modelling, SQL/PostGIS setup, spatial queries and data preparation.</p></article>
+          <article class="service-card"><span class="service-number">06 / MAPS</span><h3>Cartography &amp; map production</h3><p>Clear, publication-ready thematic maps, layouts and visual communication.</p></article>
+          <article class="service-card"><span class="service-number">07 / LOCATION</span><h3>Location intelligence</h3><p>Site selection, market context, service areas and location-based comparisons.</p></article>
+          <article class="service-card"><span class="service-number">08 / ENTERPRISE</span><h3>Enterprise GIS</h3><p>GIS workflows, spatial data management and web mapping support for organizations.</p></article>
+          <article class="service-card"><span class="service-number">09 / FIELD</span><h3>GIS data collection &amp; mapping</h3><p>Field mapping, GPS data capture, geodatabase preparation and spatial data cleanup.</p></article>
+          <article class="service-card"><span class="service-number">10 / NETWORKS</span><h3>Network &amp; accessibility analysis</h3><p>Route planning, nearest-facility analysis, travel catchments and service coverage.</p></article>
+          <article class="service-card"><span class="service-number">11 / ENVIRONMENT</span><h3>Environmental &amp; hazard mapping</h3><p>Flood susceptibility, environmental exposure and risk-screening map workflows.</p></article>
+          <article class="service-card"><span class="service-number">12 / AUTOMATION</span><h3>Geospatial data processing</h3><p>Repeatable GIS processing, data conversion and Python-based spatial workflows.</p></article>
+        </div>
+        <a class="services-action" href="mailto:olamilekanfavour03@gmail.com?subject=Geospatial%20project%20enquiry">Discuss a project <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 15 15 5M6 5h9v9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+
     <section class="section" id="about">
       <div class="wrap">
         <div class="section-heading">
           <div><p class="eyebrow">Profile</p><h2>Experience &amp; expertise</h2></div>
           <p>Based in Nigeria and open to freelance work and job opportunities, remotely, hybrid, or on-site.</p>
         </div>
-        <p class="about-intro">Geospatial Scientist specializing in spatial analysis, health GIS, remote sensing, and web mapping. I use GIS and geospatial technologies to solve real-world problems in public health, urban planning, and environmental management.</p>
+        <p class="about-intro">Geospatial Scientist specializing in spatial analysis, health GIS, remote sensing, automation, location intelligence and web mapping. I use GIS and geospatial technologies to solve real-world problems in public health, urban planning, and environmental management.</p>
         <div class="profile-grid">
           <article class="profile-card">
             <p class="eyebrow">Experience</p>
